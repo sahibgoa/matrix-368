@@ -108,7 +108,7 @@ Matrix<T> Matrix<T>::operator-(Matrix<T> m) {
 
 template <typename T>
 Matrix<T> Matrix<T>::operator+=(Matrix<T> m) {
-    *this = *this + m;
+    *this = this->operator+(m);
     return *this;
 }
 
