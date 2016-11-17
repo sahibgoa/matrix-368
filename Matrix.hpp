@@ -186,7 +186,7 @@ template <typename T>
 std::ostream &operator<<(std::ostream &o, Matrix<T> m) {
     for(int i = 0; i < m.getRows(); ++i) {
         for(int j = 0; j < m.getCols(); ++j) {
-            o << m[i][j] << " ";
+            (j == m.getCols() - 1) ? o << m[i][j] : o << m[i][j] << " ";
         }
         o << std::endl;
     }
