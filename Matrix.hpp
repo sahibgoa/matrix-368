@@ -43,6 +43,9 @@ Matrix<T>::Matrix() {
 
 template <typename T>
 Matrix<T>::Matrix(int r, int c) {
+    if (r < 0 || c < 0) {
+        exit(1);
+    }
     Matrix::row = r;
     Matrix::col = c;
     data.resize((unsigned) c, std::vector<T>((unsigned) r));
@@ -50,7 +53,7 @@ Matrix<T>::Matrix(int r, int c) {
 }
 
 template <typename T>
-const int Matrix<T>::getRows() const{
+const int Matrix<T>::getRows() const {
     return this->row;
 }
 
@@ -61,11 +64,17 @@ const int Matrix<T>::getCols() const {
 
 template <typename T>
 std::vector<T> &Matrix<T>::operator[](const int index) {
+    if (index < 0) {
+        exit(1);
+    }
     return data[index];
 }
 
 template <typename T>
 const std::vector<T> &Matrix<T>::operator[](const int index) const {
+    if (index < 0) {
+        exit(1);
+    }
     return data[index];
 }
 
@@ -111,6 +120,9 @@ Matrix<T> Matrix<T>::operator-=(Matrix<T> m) {
 
 template <typename T>
 Matrix<T> Matrix<T>::operator*(Matrix<T> m) {
+    if (this->col != m.getRows()) {
+        exit(1);
+    }
     Matrix<T> ret(this->row, m.getCols());
     for(int i = 0; i < this->row; ++i) {
         for(int j = 0; j < m.getCols(); ++j) {
@@ -131,6 +143,9 @@ Matrix<T> Matrix<T>::operator*=(Matrix<T> m) {
 
 template <typename T>
 bool Matrix<T>::operator==(const Matrix<T> m) const {
+    if (this->row != m.getRows() || this->col != m.getCols()) {
+        return false;
+    }
     for (int i = 0; i < this->row; ++i) {
         for (int j = 0; j < this->col; ++j) {
             if (this->data[i][j] != m[i][j])
@@ -171,7 +186,7 @@ template <typename T>
 std::ostream &operator<<(std::ostream &o, Matrix<T> m) {
     for(int i = 0; i < m.getRows(); ++i) {
         for(int j = 0; j < m.getCols(); ++j) {
-            o << m[i][j];
+            o << m[i][j] << " ";
         }
         o << std::endl;
     }
