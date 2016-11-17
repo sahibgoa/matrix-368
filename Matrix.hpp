@@ -12,8 +12,8 @@ private:
 public:
     Matrix();
     Matrix(int r, int c);
-    int getRows();
-    int getCols();
+    const int getRows() const;
+    const int getCols() const;
     std::vector<T> &operator[](const int index);
     const std::vector<T> &operator[](const int index) const;
     Matrix<T> operator+(Matrix m);
@@ -22,8 +22,8 @@ public:
     Matrix<T> operator+=(Matrix m);
     Matrix<T> operator-=(Matrix m);
     Matrix<T> operator*=(Matrix m);
-    bool operator==(Matrix m) const;
-    bool operator!=(Matrix m) const;
+    bool operator==(const Matrix m) const;
+    bool operator!=(const Matrix m) const;
 
     template <typename L>
     friend Matrix<T> operator*(Matrix<T> m, T c);
@@ -50,12 +50,12 @@ Matrix<T>::Matrix(int r, int c) {
 }
 
 template <typename T>
-int Matrix<T>::getRows() {
+const int Matrix<T>::getRows() const{
     return this->row;
 }
 
 template <typename T>
-int Matrix<T>::getCols() {
+const int Matrix<T>::getCols() const {
     return this->col;
 }
 
@@ -130,7 +130,7 @@ Matrix<T> Matrix<T>::operator*=(Matrix<T> m) {
 }
 
 template <typename T>
-bool Matrix<T>::operator==(Matrix<T> m) const {
+bool Matrix<T>::operator==(const Matrix<T> m) const {
     for (int i = 0; i < this->row; ++i) {
         for (int j = 0; j < this->col; ++j) {
             if (this->data[i][j] != m[i][j])
@@ -141,7 +141,7 @@ bool Matrix<T>::operator==(Matrix<T> m) const {
 }
 
 template <typename T>
-bool Matrix<T>::operator!=(Matrix<T> m) const {
+bool Matrix<T>::operator!=(const Matrix<T> m) const {
     return !(*this == m);
 }
 
