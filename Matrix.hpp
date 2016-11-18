@@ -108,7 +108,15 @@ Matrix<T> Matrix<T>::operator-(Matrix<T> m) {
 
 template <typename T>
 Matrix<T> Matrix<T>::operator+=(Matrix<T> m) {
-    *this = *this + m;
+    if (this->row != m.getRows() || this->col != m.getCols()) {
+        exit(1);
+    }
+    // Matrix<T> ret(this->row, this->col);
+    for(int i = 0; i < m.getRows(); ++i) {
+        for (int j = 0; j < m.getCols(); ++j) {
+            this->data[i][j] = this->data[i][j] + m[i][j];
+        }
+    }
     return *this;
 }
 
