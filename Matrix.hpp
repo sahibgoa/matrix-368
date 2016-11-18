@@ -26,13 +26,13 @@ public:
     bool operator!=(const Matrix &m) const;
 
     template <typename L>
-    friend Matrix<T> operator*(Matrix<T> m, T c);
+    friend Matrix<T> operator*(const Matrix<T> &m, T c);
     template <typename L>
-    friend Matrix<T> operator*(T c, Matrix<T> m);
+    friend Matrix<T> operator*(T c, const Matrix<T> &m);
     template <typename L>
-    friend Matrix<T> operator*=(Matrix<T> m, T c);
+    friend Matrix<T> operator*=(Matrix<T> &m, T c);
     template <typename L>
-    friend std::ostream &operator<<(std::ostream &o, Matrix<T> m);
+    friend std::ostream &operator<<(std::ostream &o, const Matrix<T> &m);
 };
 
 template <typename T>
@@ -171,7 +171,7 @@ bool Matrix<T>::operator!=(const Matrix<T> &m) const {
 }
 
 template <typename T>
-Matrix<T> operator*(Matrix<T> m, T c) {
+Matrix<T> operator*(const Matrix<T> &m, T c) {
     Matrix<T> ret(m.getRows(), m.getCols());
     for(int i = 0; i < m.getRows(); ++i) {
         for (int j = 0; j < m.getCols(); ++j) {
@@ -182,18 +182,18 @@ Matrix<T> operator*(Matrix<T> m, T c) {
 }
 
 template <typename T>
-Matrix<T> operator*(T c, Matrix<T> m) {
+Matrix<T> operator*(T c, const Matrix<T> &m) {
     return m * c;
 }
 
 template <typename T>
-Matrix<T> operator*=(Matrix<T> m, T c) {
+Matrix<T> operator*=(Matrix<T> &m, T c) {
     m = m * c;
     return m;
 }
 
 template <typename T>
-std::ostream &operator<<(std::ostream &o, Matrix<T> m) {
+std::ostream &operator<<(std::ostream &o, const Matrix<T> &m) {
     for(int i = 0; i < m.getRows(); ++i) {
         for(int j = 0; j < m.getCols(); ++j) {
             (j == m.getCols() - 1) ? o << m[i][j] : o << m[i][j] << " ";
