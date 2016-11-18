@@ -157,7 +157,17 @@ bool Matrix<T>::operator==(const Matrix<T> m) const {
 
 template <typename T>
 bool Matrix<T>::operator!=(const Matrix<T> m) const {
-    return !(*this == m);
+    //return !(*this == m);
+    if (this->row != m.getRows() || this->col != m.getCols()) {
+        return true;
+    }
+    for (int i = 0; i < this->row; ++i) {
+        for (int j = 0; j < this->col; ++j) {
+            if (this->data[i][j] != m[i][j])
+                return true;
+        }
+    }
+    return false;
 }
 
 template <typename T>
