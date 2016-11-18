@@ -16,9 +16,9 @@ public:
     const int getCols() const;
     std::vector<T> &operator[](const int index);
     const std::vector<T> &operator[](const int index) const;
-    Matrix<T> operator+(const Matrix &m);
-    Matrix<T> operator-(const Matrix &m);
-    Matrix<T> operator*(const Matrix &m);
+    const Matrix<T> operator+(const Matrix &m) const;
+    const Matrix<T> operator-(const Matrix &m) const;
+    const Matrix<T> operator*(const Matrix &m) const;
     Matrix<T> &operator+=(const Matrix &m);
     Matrix<T> operator-=(const Matrix &m);
     Matrix<T> operator*=(const Matrix &m);
@@ -79,7 +79,7 @@ const std::vector<T> &Matrix<T>::operator[](const int index) const {
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) {
+const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const{
     if (this->row != m.getRows() || this->col != m.getCols()) {
         exit(1);
     }
@@ -93,7 +93,7 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) {
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::operator-(const Matrix<T> &m) {
+const Matrix<T> Matrix<T>::operator-(const Matrix<T> &m) const{
     if (this->row != m.getRows() || this->col != m.getCols()) {
         exit(1);
     }
@@ -119,7 +119,7 @@ Matrix<T> Matrix<T>::operator-=(const Matrix<T> &m) {
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::operator*(const Matrix<T> &m) {
+const Matrix<T> Matrix<T>::operator*(const Matrix<T> &m) const{
     if (this->col != m.getRows()) {
         exit(1);
     }
