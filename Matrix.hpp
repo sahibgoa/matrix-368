@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <cassert>
 
 template<typename T>
 class Matrix {
@@ -43,13 +44,11 @@ Matrix<T>::Matrix() {
 
 template <typename T>
 Matrix<T>::Matrix(int r, int c) {
-    if (r < 0 || c < 0) {
-        exit(1);
-    }
+    assert(r >= 0 && c >= 0);
     Matrix::row = r;
     Matrix::col = c;
-    data.resize((unsigned) c, std::vector<T>((unsigned) r));
-    //std::for_each(data.begin(), data.end(), [c](std::vector<T> d){d.resize((unsigned) c);});
+    //data.resize((unsigned) c, std::vector<T>((unsigned) r));
+    std::for_each(data.begin(), data.end(), [c](std::vector<T> &d){d.resize((unsigned) c);});
 }
 
 template <typename T>
@@ -64,25 +63,19 @@ const int Matrix<T>::getCols() const {
 
 template <typename T>
 std::vector<T> &Matrix<T>::operator[](const int index) {
-    if (index < 0) {
-        exit(1);
-    }
+    assert(index >= 0);
     return data[index];
 }
 
 template <typename T>
 const std::vector<T> &Matrix<T>::operator[](const int index) const {
-    if (index < 0) {
-        exit(1);
-    }
+    assert(index >= 0);
     return data[index];
 }
 
 template <typename T>
 const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const{
-    if (this->row != m.getRows() || this->col != m.getCols()) {
-        exit(1);
-    }
+    assert(this->row == m.getRows() && this->col == m.getCols());
     Matrix<T> ret(this->row, this->col);
     for(int i = 0; i < m.getRows(); ++i) {
         for (int j = 0; j < m.getCols(); ++j) {
@@ -94,9 +87,7 @@ const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const{
 
 template <typename T>
 const Matrix<T> Matrix<T>::operator-(const Matrix<T> &m) const{
-    if (this->row != m.getRows() || this->col != m.getCols()) {
-        exit(1);
-    }
+    assert(this->row == m.getRows() && this->col == m.getCols());
     Matrix<T> ret(this->row, this->col);
     for(int i = 0; i < m.getRows(); ++i) {
         for (int j = 0; j < m.getCols(); ++j) {
@@ -120,9 +111,7 @@ Matrix<T> Matrix<T>::operator-=(const Matrix<T> &m) {
 
 template <typename T>
 const Matrix<T> Matrix<T>::operator*(const Matrix<T> &m) const{
-    if (this->col != m.getRows()) {
-        exit(1);
-    }
+    assert(this->col == m.getRows());
     Matrix<T> ret(this->row, m.getCols());
     for(int i = 0; i < this->row; ++i) {
         for(int j = 0; j < m.getCols(); ++j) {
@@ -143,9 +132,7 @@ Matrix<T> Matrix<T>::operator*=(const Matrix<T> &m) {
 
 template <typename T>
 bool Matrix<T>::operator==(const Matrix<T> &m) const {
-    if (this->row != m.getRows() || this->col != m.getCols()) {
-        return false;
-    }
+    assert(this->row == m.getRows() && this->col == m.getCols());
     for (int i = 0; i < this->row; ++i) {
         for (int j = 0; j < this->col; ++j) {
             if (this->data[i][j] != m[i][j])
@@ -158,9 +145,7 @@ bool Matrix<T>::operator==(const Matrix<T> &m) const {
 template <typename T>
 bool Matrix<T>::operator!=(const Matrix<T> &m) const {
     //return !(*this == m);
-    if (this->row != m.getRows() || this->col != m.getCols()) {
-        return true;
-    }
+    assert(this->row == m.getRows() && this->col == m.getCols());
     for (int i = 0; i < this->row; ++i) {
         for (int j = 0; j < this->col; ++j) {
             if (this->data[i][j] != m[i][j])
