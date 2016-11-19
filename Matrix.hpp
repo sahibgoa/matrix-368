@@ -47,8 +47,7 @@ Matrix<T>::Matrix(int r, int c) {
     assert(r >= 0 && c >= 0);
     Matrix::row = r;
     Matrix::col = c;
-    data.resize((unsigned) c, std::vector<T>((unsigned) r));
-    //std::for_each(data.begin(), data.end(), [c](std::vector<T> &d){d.resize((unsigned) c);});
+    data.resize((unsigned) r, std::vector<T>((unsigned) c));
 }
 
 template <typename T>
@@ -147,14 +146,6 @@ bool Matrix<T>::operator==(const Matrix<T> &m) const {
 template <typename T>
 bool Matrix<T>::operator!=(const Matrix<T> &m) const {
     return !(*this == m);
-//    assert(this->row == m.getRows() && this->col == m.getCols());
-//    for (int i = 0; i < this->row; ++i) {
-//        for (int j = 0; j < this->col; ++j) {
-//            if (this->data[i][j] != m[i][j])
-//                return true;
-//        }
-//    }
-//    return false;
 }
 
 template <typename T>
