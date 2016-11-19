@@ -21,8 +21,8 @@ public:
     const Matrix<T> operator-(const Matrix &m) const;
     const Matrix<T> operator*(const Matrix &m) const;
     Matrix<T> &operator+=(const Matrix &m);
-    Matrix<T> operator-=(const Matrix &m);
-    Matrix<T> operator*=(const Matrix &m);
+    Matrix<T> &operator-=(const Matrix &m);
+    Matrix<T> &operator*=(const Matrix &m);
     bool operator==(const Matrix &m) const;
     bool operator!=(const Matrix &m) const;
 
@@ -31,7 +31,7 @@ public:
     template <typename L>
     friend Matrix<T> operator*(T c, const Matrix<T> &m);
     template <typename L>
-    friend Matrix<T> operator*=(Matrix<T> &m, T c);
+    friend Matrix<T> &operator*=(Matrix<T> &m, T c);
     template <typename L>
     friend std::ostream &operator<<(std::ostream &o, const Matrix<T> &m);
 };
@@ -73,7 +73,7 @@ const std::vector<T> &Matrix<T>::operator[](const int index) const {
 }
 
 template <typename T>
-const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const{
+const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const {
     assert(this->row == m.getRows() && this->col == m.getCols());
     Matrix<T> ret(this->row, this->col);
     for(int i = 0; i < m.getRows(); ++i) {
@@ -85,7 +85,7 @@ const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const{
 }
 
 template <typename T>
-const Matrix<T> Matrix<T>::operator-(const Matrix<T> &m) const{
+const Matrix<T> Matrix<T>::operator-(const Matrix<T> &m) const {
     assert(this->row == m.getRows() && this->col == m.getCols());
     Matrix<T> ret(this->row, this->col);
     for(int i = 0; i < m.getRows(); ++i) {
@@ -103,13 +103,13 @@ Matrix<T> &Matrix<T>::operator+=(const Matrix<T> &m) {
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::operator-=(const Matrix<T> &m) {
+Matrix<T> &Matrix<T>::operator-=(const Matrix<T> &m) {
     *this = *this - m;
     return *this;
 }
 
 template <typename T>
-const Matrix<T> Matrix<T>::operator*(const Matrix<T> &m) const{
+const Matrix<T> Matrix<T>::operator*(const Matrix<T> &m) const {
     assert(this->col == m.getRows());
     Matrix<T> ret(this->row, m.getCols());
     for(int i = 0; i < this->row; ++i) {
@@ -124,7 +124,7 @@ const Matrix<T> Matrix<T>::operator*(const Matrix<T> &m) const{
 }
 
 template <typename T>
-Matrix<T> Matrix<T>::operator*=(const Matrix<T> &m) {
+Matrix<T> &Matrix<T>::operator*=(const Matrix<T> &m) {
     *this = *this * m;
     return *this;
 }
@@ -165,7 +165,7 @@ Matrix<T> operator*(T c, const Matrix<T> &m) {
 }
 
 template <typename T>
-Matrix<T> operator*=(Matrix<T> &m, T c) {
+Matrix<T> &operator*=(Matrix<T> &m, T c) {
     m = m * c;
     return m;
 }
