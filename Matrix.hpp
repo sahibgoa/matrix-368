@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+// File Name:      Matrix.hpp
+//
+// Author:         Sahib Pandori and Haylee Monteiro
+// CS email:       sahib@cs.wisc.edu and haylee@cs.wisc.edu
+//
+// Description:    This file contains all the templated methods and definition
+//                 for the Matrix objects
+///////////////////////////////////////////////////////////////////////////////
+
 #include <algorithm>
 #include <vector>
 #include <cassert>
@@ -51,7 +61,7 @@ public:
     const std::vector<T> &operator[](const int index) const;
 
     /**
-     * @brief Overloading the addition operator for Matrix class
+     * @brief Overloading the addition operator for Matrix
      *
      * @param m : the matrix to be added to the calling object
      * @return the sum of the calling Matrix object and m
@@ -59,7 +69,7 @@ public:
     const Matrix<T> operator+(const Matrix &m) const;
 
     /**
-     * @brief Overloading the subtraction operator for Matrix class
+     * @brief Overloading the subtraction operator for Matrix
      *
      * @param m : the matrix to be subtracted from the calling object
      * @return the difference between the calling Matrix object and m
@@ -67,7 +77,7 @@ public:
     const Matrix<T> operator-(const Matrix &m) const;
 
     /**
-     * @brief Overloading the multiplication operator for Matrix class
+     * @brief Overloading the multiplication operator for Matrix
      *
      * @param m : the matrix to be multiplied to the calling object
      * @return the product of the calling Matrix object and m
@@ -75,7 +85,7 @@ public:
     const Matrix<T> operator*(const Matrix &m) const;
 
     /**
-     * @brief Overloading the addition assignment operator for Matrix class
+     * @brief Overloading the addition assignment operator for Matrix
      *
      * @param m : the matrix to be added to the calling object
      * @return reference to the calling object after m has been added to it
@@ -83,7 +93,7 @@ public:
     Matrix<T> &operator+=(const Matrix &m);
 
     /**
-     * @brief Overloading the subtraction assignment operator for Matrix class
+     * @brief Overloading the subtraction assignment operator for Matrix
      *
      * @param m : the matrix to be subtracted from the calling object
      * @return reference to the calling object after m has been subtracted from
@@ -93,7 +103,6 @@ public:
 
     /**
      * @brief Overloading the multiplication assignment operator for Matrix
-     *        class
      *
      * @param m : the matrix to be multiplied to the calling object
      * @return reference to the calling object after m has been multiplied to it
@@ -101,7 +110,7 @@ public:
     Matrix<T> &operator*=(const Matrix &m);
 
     /**
-     * @brief Overloading the equality check operator for Matrix class
+     * @brief Overloading the equality check operator for Matrix
      *
      * @param m : the matrix to be compared to the calling object
      * @return true if the matrices are equal, false otherwise
@@ -109,7 +118,7 @@ public:
     bool operator==(const Matrix &m) const;
 
     /**
-     * @brief Overloading the not-equal check operator for Matrix class
+     * @brief Overloading the not-equal check operator for Matrix
      *
      * @param m : the matrix to be compared to the calling object
      * @return true if the matrices not equal false otherwise
@@ -118,7 +127,6 @@ public:
 
     /**
      * @brief Overloading the multiplication operator (with scalars) for Matrix
-     *        class
      *
      * @param m : the matrix to be multiplied with the scalar
      * @param c : the scalar to be multiplied with the matrix
@@ -129,7 +137,6 @@ public:
 
     /**
      * @brief Overloading the multiplication operator (with scalars) for Matrix
-     *        class
      *
      * @param c : the scalar to be multiplied with the matrix
      * @param m : the matrix to be multiplied with the scalar
@@ -140,7 +147,7 @@ public:
 
     /**
      * @brief Overloading the multiplication assignment operator (with scalars)
-     *        for Matrix class
+     *        for Matrix
      *
      * @param m : the matrix to be multiplied with the scalar
      * @param c : the scalar to be multiplied with the matrix
