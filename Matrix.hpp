@@ -7,6 +7,8 @@
 // Description:    This file contains all the templated methods and definition
 //                 for the Matrix objects
 ///////////////////////////////////////////////////////////////////////////////
+#ifndef MATRIX_H
+#define MATRIX_H
 
 #include <algorithm>
 #include <vector>
@@ -307,3 +309,5 @@ std::ostream &operator<<(std::ostream &o, const Matrix<T> &m) {
     }
     return o;
 }
+
+#endif
