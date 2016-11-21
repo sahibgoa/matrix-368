@@ -190,13 +190,13 @@ const int Matrix<T>::getCols() const {
 
 template <typename T>
 std::vector<T> &Matrix<T>::operator[](const int index) {
-    assert(index >= 0);
+    assert(index >= 0 && index < this->row);
     return data[index];
 }
 
 template <typename T>
 const std::vector<T> &Matrix<T>::operator[](const int index) const {
-    assert(index >= 0);
+    assert(index >= 0 && index < this->row);
     return data[index];
 }
 
