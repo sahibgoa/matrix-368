@@ -37,11 +37,13 @@ int main() {
     std::cout << m << std::endl;
 
     // create another 2 x 2 matrix of integers.
-    Matrix<int> n(2, 2);
+    Matrix<int> n(2, 3);
     n[0][0] = 3;
     n[0][1] = 1;
+    n[0][1] = 4;
     n[1][0] = 7;
     n[1][1] = 2;
+    n[1][2] = 5;
     std::cout << "Matrix n:" << std::endl;
     std::cout << n << std::endl;
 
@@ -64,7 +66,12 @@ int main() {
     std::cout << std::endl;
 
     // add 2 matrices of integers.
-    Matrix<int> iAdd = m + n;
+    Matrix<int> iAdd(2, 2);
+    try {
+        iAdd = m + n;
+    } catch (std::exception e) {
+        std::cout << e.what();
+    } /*
     std::cout << "iAdd = m + n" << std::endl;
     std::cout << iAdd << std::endl;
 
@@ -231,7 +238,7 @@ int main() {
     std::complex<int> cScalar4(10, 0);
     cm *= cScalar4;
     std::cout << "cm *= 10" << std::endl;
-    std::cout << cm << std::endl;
+    std::cout << cm << std::endl;*/
 
     return 0;
 }

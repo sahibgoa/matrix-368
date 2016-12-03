@@ -13,6 +13,92 @@
 #include <algorithm>
 #include <vector>
 #include <cassert>
+#include <exception>
+
+class InvalidDimension : public std::exception {
+private:
+    int row;
+    int col;
+public:
+    InvalidDimension(int r, int c) {
+        this->row = r;
+        this->col = c;
+    }
+    virtual const char* what() const throw() {
+        std::string exception = "Invalid Dimension Exception: ";
+        if (row < 0 && col < 0) {
+            exception += std::to_string(row) + " and " + std::to_string(col)
+                         + " are invalid dimensions for rows and columns "
+                         + "respectively";
+        } else if (row < 0) {
+            exception += std::to_string(row) + " is an invalid dimension for "
+                         + "rows";
+        } else if (col < 0) {
+            exception += std::to_string(col) + " is an invalid dimension for "
+                         + "columns";
+        } else {
+            exception += "Exception thrown at the wrong time";
+        }
+        return exception.c_str();
+    }
+};
+
+class IndexOutOfBounds : public std::exception {
+private:
+    int index;
+public:
+    IndexOutOfBounds(const int i) {
+        this->index = i;
+    }
+
+    virtual const char* what(int index) const throw() {
+        std::string exception = "Index Out Of Bounds Exception: " + std::to_string(index)
+                                + " is an invalid index for rows";
+        return exception.c_str();
+    }
+};
+
+class IncompatibleMatrices : public std::exception {
+private:
+    char op;
+    int lhs_row;
+    int lhs_col;
+    int rhs_row;
+    int rhs_col;
+public:
+    IncompatibleMatrices(char op, int lrow, int lcol, int rrow, int rcol) {
+        this->op = op;
+        this->lhs_row = lrow;
+        this->lhs_col = lcol;
+        this->rhs_row = rrow;
+        this->rhs_col = rcol;
+    }
+    virtual const char* what() const throw() {
+        std::string exception =  "Incompatible Matrices Exception: ";
+        switch (op) {
+            case '+':
+                exception += "Addition ";
+                break;
+            case '-':
+                exception += "Subtraction ";
+                break;
+            case '*':
+                exception += "Multiplication ";
+                break;
+            default:
+                exception += "Undefined operation ";
+                break;
+        }
+        exception += "of LHS matrix with dimensions " + std::to_string(lhs_row)
+                     + " x " + std::to_string(lhs_col) + " and RHS matrix with"
+                     + " dimensions " + std::to_string(rhs_row) + " x "
+                     + std::to_string(rhs_col) + " is undefined";
+
+        return exception.c_str();
+    }
+};
+
+
 
 template<typename T>
 class Matrix {
@@ -171,7 +257,9 @@ public:
 
 template <typename T>
 Matrix<T>::Matrix(int r, int c) {
-    assert(r >= 0 && c >= 0);
+    if (r < 0 || c < 0) {
+        throw InvalidDimension(r, c);
+    }
     Matrix::row = r;
     Matrix::col = c;
     // Resize the vector to fit r rows and c columns
@@ -190,19 +278,26 @@ const int Matrix<T>::getCols() const {
 
 template <typename T>
 std::vector<T> &Matrix<T>::operator[](const int index) {
-    assert(index >= 0 && index < this->row);
+    if (index < 0 || index >= this->row) {
+        throw IndexOutOfBounds(index);
+    }
     return data[index];
 }
 
 template <typename T>
 const std::vector<T> &Matrix<T>::operator[](const int index) const {
-    assert(index >= 0 && index < this->row);
+    if (index < 0 || index >= this->row) {
+        throw IndexOutOfBounds(index);
+    }
     return data[index];
 }
 
 template <typename T>
 const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const {
-    assert(this->row == m.getRows() && this->col == m.getCols());
+    if (this->row != m.getRows() || this->col != m.getCols()) {
+        throw IncompatibleMatrices('+', this->row, this->col, m.getRows(),
+                                   m.getCols());
+    }
     Matrix<T> ret(this->row, this->col);
     for(int i = 0; i < m.getRows(); ++i) {
         for (int j = 0; j < m.getCols(); ++j) {
@@ -214,7 +309,10 @@ const Matrix<T> Matrix<T>::operator+(const Matrix<T> &m) const {
 
 template <typename T>
 const Matrix<T> Matrix<T>::operator-(const Matrix<T> &m) const {
-    assert(this->row == m.getRows() && this->col == m.getCols());
+    if (this->row != m.getRows() || this->col != m.getCols()) {
+        throw IncompatibleMatrices('-', this->row, this->col, m.getRows(),
+                                   m.getCols());
+    }
     Matrix<T> ret(this->row, this->col);
     for(int i = 0; i < m.getRows(); ++i) {
         for (int j = 0; j < m.getCols(); ++j) {
@@ -238,7 +336,10 @@ Matrix<T> &Matrix<T>::operator-=(const Matrix<T> &m) {
 
 template <typename T>
 const Matrix<T> Matrix<T>::operator*(const Matrix<T> &m) const {
-    assert(this->col == m.getRows());
+    if (this->col != m.getRows()) {
+        throw IncompatibleMatrices('*', this->row, this->col, m.getRows(),
+                                   m.getCols());
+    }
     Matrix<T> ret(this->row, m.getCols());
     for(int i = 0; i < this->row; ++i) {
         for(int j = 0; j < m.getCols(); ++j) {
