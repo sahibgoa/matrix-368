@@ -69,7 +69,7 @@ int main() {
     Matrix<int> iAdd(2, 2);
     try {
         iAdd = m + n;
-    } catch (std::exception e) {
+    } catch (IncompatibleMatrices e) {
         std::cout << e.what();
     } /*
     std::cout << "iAdd = m + n" << std::endl;
