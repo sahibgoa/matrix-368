@@ -22,10 +22,30 @@
 int main() {
     // PART 1 - MATRIX OF INTEGERS.
 
-    // create a matrix and check its dimensions.
-    Matrix<int> a(2, 4);
-    std::cout << "Matrix a has " << a.getRows() << " rows and " 
-              << a.getCols() << " columns" << std::endl << std::endl;
+    // TEST CASES: InvalidDimension Exception
+
+    try {
+        Matrix<int> a(2, 4);
+    } catch (InvalidDimension e) {
+        std::cout << e.what();
+    }
+    try {
+        Matrix<int> a(-2, 4);
+    } catch (InvalidDimension e) {
+        std::cout << e.what();
+    }
+    try {
+        Matrix<int> a(2, -4);
+    } catch (InvalidDimension e) {
+        std::cout << e.what();
+    }
+    try {
+        Matrix<int> a(-2, -4);
+    } catch (InvalidDimension e) {
+        std::cout << e.what();
+    }
+
+    // TEST CASES: IndexOutOfBounds Exception
 
     // create a 2 x 2 matrix of integers.
     Matrix<int> m(2, 2);
@@ -33,6 +53,17 @@ int main() {
     m[0][1] = 2;
     m[1][0] = 3;
     m[1][1] = 4;
+    try {
+        m[-1][0] = 1;
+    } catch (IndexOutOfBounds e) {
+        std::cout << e.what();
+    }
+    try {
+        m[2][1] = 1;
+    } catch (IndexOutOfBounds e) {
+        std::cout << e.what();
+    }
+
     std::cout << "Matrix m:" << std::endl;
     std::cout << m << std::endl;
 
@@ -65,25 +96,35 @@ int main() {
     }
     std::cout << std::endl;
 
+    // TEST CASES: IncompatibleMatrices Exception
+
     // add 2 matrices of integers.
     Matrix<int> iAdd(2, 2);
     try {
         iAdd = m + n;
     } catch (IncompatibleMatrices e) {
         std::cout << e.what();
-    } /*
-    std::cout << "iAdd = m + n" << std::endl;
-    std::cout << iAdd << std::endl;
+    }
 
     // subtract 2 matrices of integers.
-    Matrix<int> iSub = m - n;
-    std::cout << "iSub = m - n" << std::endl;
-    std::cout << iSub << std::endl;
+    Matrix<int> iSub(2,2);
+    try {
+        iSub = m - n;
+    } catch (IncompatibleMatrices e) {
+        std::cout << e.what();
+    }
 
     // multiply 2 matrices of integers.
     Matrix<int> iMul = m * n;
     std::cout << "iMul = m * n" << std::endl;
     std::cout << iMul << std::endl;
+
+    // multiply 2 matrices of integers.
+    try {
+        iMul = n * m;
+    } catch (IncompatibleMatrices e) {
+        std::cout << e.what();
+    }
 
     // multiply a matrix of integers with an integer.
     Matrix<int> iScalarMul = 2 * m;
@@ -94,50 +135,31 @@ int main() {
     std::cout << iScalarMul << std::endl;
 
     // compound addition of matrix of integers.
-    m += n;
-    std::cout << "m += n" << std::endl;
-    std::cout << m << std::endl;
-    std::cout << "iAdd:" << std::endl;
-    std::cout << iAdd << std::endl;
-    if (m == iAdd) {
-        std::cout << "m and iAdd are equal." << std::endl;
-    } else {
-        std::cout << "m and iAdd are NOT equal." << std::endl;
+    try {
+        m += n;
+    } catch (IncompatibleMatrices e) {
+        std::cout << e.what();
     }
-    std::cout << std::endl;
+
+    try {
+        m -= n;
+    } catch (IncompatibleMatrices e) {
+        std::cout << e.what();
+    }
+
+    try {
+        m *= n;
+    } catch (IncompatibleMatrices e) {
+        std::cout << e.what();
+    }
+
 
     // compound subtraction of matrix of integers.
-    m -= 2 * n;
-    std::cout << "m -= 2 * n" << std::endl;
-    std::cout << m << std::endl;
-    std::cout << "iSub:" << std::endl;
-    std::cout << iSub << std::endl;
-    if (m == iSub) {
-        std::cout << "m and iSub are equal." << std::endl;
-    } else {
-        std::cout << "m and iSub are NOT equal." << std::endl;
+    try {
+        m -= 2 * n;
+    } catch (IncompatibleMatrices e) {
+        std::cout << e.what();
     }
-    std::cout << std::endl;
-
-    // compound addition and multiplication of matrix of integers.
-    m += n;
-    m *= n;
-    std::cout << "m += n" << std::endl;
-    std::cout << "m *= n" << std::endl;
-    std::cout << m << std::endl;
-    std::cout << "iMul * 2:" << std::endl;
-    std::cout << iMul * 2<< std::endl;
-    if (m != iMul) {
-        std::cout << "m and iMul are NOT equal." << std::endl;
-    } else {
-        std::cout << "m and iMul are equal." << std::endl;
-    }
-    std::cout << std::endl;
-
-    // compound multiplication of a matrix of integers with an integer.
-    m *= 10;
-    std::cout << "m *= 10" << std::endl;
-    std::cout << m << std::endl;
 
     // PART 2 - MATRIX OF COMPLEX NUMBERS.
 

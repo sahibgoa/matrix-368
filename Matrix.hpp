@@ -29,15 +29,15 @@ public:
         if (row < 0 && col < 0) {
             exception += std::to_string(row) + " and " + std::to_string(col)
                          + " are invalid dimensions for rows and columns "
-                         + "respectively";
+                         + "respectively\n";
         } else if (row < 0) {
             exception += std::to_string(row) + " is an invalid dimension for "
-                         + "rows";
+                         + "rows\n";
         } else if (col < 0) {
             exception += std::to_string(col) + " is an invalid dimension for "
-                         + "columns";
+                         + "columns\n";
         } else {
-            exception += "Exception thrown at the wrong time";
+            exception += "Exception thrown at the wrong time\n";
         }
         return exception.c_str();
     }
@@ -51,9 +51,10 @@ public:
         this->index = i;
     }
 
-    virtual const char* what(int index) const throw() {
-        std::string exception = "Index Out Of Bounds Exception: " + std::to_string(index)
-                                + " is an invalid index for rows";
+    virtual const char* what() const throw() {
+        std::string exception = "Index Out Of Bounds Exception: "
+                                + std::to_string(index)
+                                + " is an invalid index for rows\n";
         return exception.c_str();
     }
 };
@@ -92,7 +93,7 @@ public:
         exception += "of LHS matrix with dimensions " + std::to_string(lhs_row)
                      + " x " + std::to_string(lhs_col) + " and RHS matrix with"
                      + " dimensions " + std::to_string(rhs_row) + " x "
-                     + std::to_string(rhs_col) + " is undefined";
+                     + std::to_string(rhs_col) + " is undefined\n";
 
         return exception.c_str();
     }
